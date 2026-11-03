@@ -26,6 +26,31 @@ class PollTest < ActiveSupport::TestCase
     assert_equal 0.0, poll.results[:options].first[:percentage]
   end
 
+  test "leading_option returns the option with the most votes" do
+    poll = Poll.create!(question: "Best language?")
+    a = poll.options.create!(label: "Ruby")
+    b = poll.options.create!(label: "Python")
+    poll.votes.create!(option: a, voter_token: "x")
+    poll.votes.create!(option: a, voter_token: "y")
+    poll.votes.create!(option: b, voter_token: "z")
+    assert_equal a, poll.leading_option
+  end
+
+  test "leading_option is nil with no votes" do
+    poll = Poll.create!(question: "Quiet?")
+    poll.options.create!(label: "A")
+    assert_nil poll.leading_option
+  end
+
+  test "leading_option is nil on a tie for first" do
+    poll = Poll.create!(question: "Tie?")
+    a = poll.options.create!(label: "A")
+    b = poll.options.create!(label: "B")
+    poll.votes.create!(option: a, voter_token: "x")
+    poll.votes.create!(option: b, voter_token: "y")
+    assert_nil poll.leading_option
+  end
+
   test "destroying a poll removes its options and votes" do
     poll = Poll.create!(question: "Gone?")
     option = poll.options.create!(label: "A")

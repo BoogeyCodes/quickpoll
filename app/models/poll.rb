@@ -23,4 +23,13 @@ class Poll < ApplicationRecord
       end
     }
   end
+
+  # The option currently in the lead, or nil when there are no votes or a tie for first.
+  def leading_option
+    ranked = options.sort_by { |option| -option.votes.size }
+    return nil if ranked.empty? || ranked.first.votes.size.zero?
+    return nil if ranked.size > 1 && ranked.first.votes.size == ranked.second.votes.size
+
+    ranked.first
+  end
 end
