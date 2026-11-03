@@ -96,7 +96,7 @@ bin/rails db:prepare
 bin/rails test
 ```
 
-Nineteen tests with Rails' built-in Minitest: model tests for the vote rules and the results
+Twenty-two tests with Rails' built-in Minitest: model tests for the vote rules and the results
 calculation, and request tests that drive the JSON API end to end, asserting status codes, the error
 contract and the computed percentages. CI runs the suite against a fresh SQLite database on every
 push.
