@@ -1,0 +1,11 @@
+/.bundle
+/log/*
+!/log/.keep
+/storage/*
+!/storage/.keep
+/tmp/*
+!/tmp/.keep
+*.sqlite3
+*.sqlite3-*
+/db/schema.rb
+.DS_Store
